@@ -1,0 +1,33 @@
+{
+	"name": "kubectl-flame",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	// Features to add to the dev container. More info: https://containers.dev/implementors/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+	// Configure tool-specific properties.
+	// "customizations": {},
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+	"remoteUser": "vscode",
+	"mounts": [
+		"source=${localEnv:HOME}/.docker,target=/home/vscode/.docker,type=bind",
+		"source=${localEnv:HOME}/.kube,target=/home/vscode/.kube,type=bind"
+	],
+	"containerEnv": {
+		// docker
+		"DOCKER_HOST": "tcp://heraklion-arm.pcr.hlck.cz:32375",
+		"DOCKER_BUILDKIT": "1",
+		// kubernetes
+		"KUBECONFIG": "/home/vscode/.kube/config-chania-2",
+		// skaffold
+		"SKAFFOLD_DEFAULT_REPO": "registry.pcr.hlck.cz/dev",
+		// "SKAFFOLD_NAMESPACE": "dev",
+		// "SKAFFOLD_PROFILE": "lpr",
+	}
+}

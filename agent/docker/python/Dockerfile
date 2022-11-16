@@ -5,11 +5,9 @@ RUN go get -d -v ./...
 RUN cd agent && go build -o /go/bin/agent
 
 FROM python:3.8-alpine AS pyspybuild
-# only works with pip version 20.2.4
-# https://github.com/benfred/py-spy/issues/353
-RUN pip install pip==20.2.4
-RUN echo 'manylinux1_compatible = True' > /usr/local/lib/python3.8/site-packages/_manylinux.py
-RUN pip3 install py-spy==0.4.0.dev1
+# install cargo using alpine's package manager
+RUN apk add --no-cache cargo git
+RUN pip3 install git+https://github.com/benfred/py-spy
 
 FROM python:3.8-alpine
 RUN mkdir /app
